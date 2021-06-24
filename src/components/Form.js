@@ -24,12 +24,16 @@ function Form() {
   } = values;
 
   // event handler
-  const handleChange = () => {
-    console.log('handle change');
+  const handleChange = name => event => {
+    setValues({ ...values, [name]: event.target.value });
   };
 
-  const handleSubmit = () => {
-    console.log('handle submit');
+  const handleSubmit = event => {
+    event.preventDefault();
+    setValues({ ...values, buttonText: '...sending' });
+
+    // send all data to backend for email
+    console.table({ name, email, phone, message, uploadedFile });
   };
 
   return (
@@ -39,8 +43,8 @@ function Form() {
           <label className="text-muted">Description</label>
           <textarea
             onChange={handleChange('message')}
-            type="text"
             className="form-control"
+            type="text"
             value={message}
             required
           ></textarea>
